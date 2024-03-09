@@ -1,0 +1,6 @@
+{
+    "Region": "us-east-1",
+    "BucketBaseName": "MY_BUCKET_BASE_NAME",
+    "ObjectUploadDirectory": "../input"
+  }
+  

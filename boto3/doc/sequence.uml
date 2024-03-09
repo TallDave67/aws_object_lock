@@ -1,0 +1,34 @@
+@startuml
+
+participant "Python Script" as PythonScript
+participant "Boto3 AWS Client" as Boto3Client
+participant IAM
+participant S3
+participant "Hard Drive" as HardDrive
+
+PythonScript -> Boto3Client: Create AWS Client
+activate Boto3Client
+Boto3Client -> IAM: Authenticate
+activate IAM
+IAM --> Boto3Client: Authentication Success
+deactivate IAM
+Boto3Client -> S3: Create GOVERNANCE Bucket
+activate S3
+S3 --> Boto3Client: GOVERNANCE Bucket Created
+Boto3Client -> S3: Create COMPLIANCE Bucket
+S3 --> Boto3Client: COMPLIANCE Bucket Created
+deactivate S3
+deactivate Boto3Client
+
+PythonScript -> HardDrive: Read Files
+activate HardDrive
+HardDrive --> PythonScript: Files Read
+deactivate HardDrive
+PythonScript -> S3: Upload Writable Files to GOVERNANCE Bucket
+activate S3
+S3 --> PythonScript: Writable Files Uploaded
+PythonScript -> S3: Upload Read-Only Files to COMPLIANCE Bucket
+S3 --> PythonScript: Read-Only Files Uploaded
+deactivate S3
+
+@enduml
